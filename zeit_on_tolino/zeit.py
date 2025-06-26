@@ -39,19 +39,19 @@ def _login(webdriver: WebDriver) -> None:
     username, password = _get_credentials()
     webdriver.get(ZEIT_LOGIN_URL)
 
-    username_field = webdriver.find_element(By.ID, "login_email")
+    username_field = webdriver.find_element(By.ID, "username")
     username_field.send_keys(username)
-    password_field = webdriver.find_element(By.ID, "login_pass")
+    password_field = webdriver.find_element(By.ID, "password")
     password_field.send_keys(password)
 
-    btn = webdriver.find_element(By.CLASS_NAME, "submit-button.log")
+    btn = webdriver.find_element(By.ID, "kc-login")
     btn.click()
     time.sleep(Delay.small)
 
     if "anmelden" in webdriver.current_url:
         raise RuntimeError("Failed to login, check your login credentials.")
 
-    WebDriverWait(webdriver, Delay.medium).until(EC.presence_of_element_located((By.CLASS_NAME, "page-section-header")))
+    WebDriverWait(webdriver, Delay.medium).until(EC.presence_of_element_located((By.CLASS_NAME, "page-section-header hidden-xs")))
 
 
 def _get_latest_downloaded_file_path(download_dir: str) -> Path:
