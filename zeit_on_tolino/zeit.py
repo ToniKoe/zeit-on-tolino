@@ -77,24 +77,38 @@ def wait_for_downloads(path):
 
 
 def download_e_paper(webdriver: WebDriver) -> str:
+    log.info("logging into ZEIT premium...")
     _login(webdriver)
 
-    time.sleep(Delay.small)
-    for link in webdriver.find_elements(By.TAG_NAME, "a"):
-        if link.text == BUTTON_TEXT_TO_RECENT_EDITION:
-            link.click()
-            break
+    # go to most recent edition
+    log.info("downloading most recent ZEIT e-paper...")
+    time.sleep(Delay.large)
+    # time.sleep(Delay.large)
+    # for link in webdriver.find_elements(By.TAG_NAME, "a"):
+    #     log.info('\t' + link.text)
+    #     if link.text == BUTTON_TEXT_TO_RECENT_EDITION:
+    #         link.click()
+    #         log.info('clicked ' + link.text)
+    #         break
+
+    link = WebDriverWait(webdriver, Delay.medium).until(
+        EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'ZUR AKTUELLEN AUSGABE')]"))
+    )
+    link.click()
 
     if BUTTON_TEXT_EPUB_DOWNLOAD_IS_PENDING in webdriver.page_source:
         raise RuntimeError("New ZEIT release is available, however, EPUB version is not. Retry again later.")
 
-    time.sleep(Delay.small)
+    # trigger epub download
+    time.sleep(Delay.medium)
+    log.info('going through links')
     for link in webdriver.find_elements(By.TAG_NAME, "a"):
+        log.info('\t' + link.text)
         if link.text == BUTTON_TEXT_DOWNLOAD_EPUB:
             log.info("clicking download button now...")
             link.click()
-            break
-
+            break 
+    
     wait_for_downloads(webdriver.download_dir_path)
     e_paper_path = _get_latest_downloaded_file_path(webdriver.download_dir_path)
 
