@@ -6,7 +6,9 @@ from typing import Union
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.firefox.webdriver import WebDriver
 
-DOWNLOAD_PATH = tempfile.TemporaryDirectory().name
+# keep reference to temp dir so it stays alive 
+_tmp_dir = tempfile.TemporaryDirectory()
+DOWNLOAD_PATH = _tmp_dir.name
 
 
 @dataclass
@@ -25,3 +27,9 @@ def get_webdriver(download_path: Union[Path, str] = DOWNLOAD_PATH) -> WebDriver:
     webdriver = Chrome(options=options)
     setattr(webdriver, "download_dir_path", str(download_path))
     return webdriver
+
+def clean_up_webdriver(webdriver):
+    # clear temporary downloadfolder
+    _tmp_dir.cleanup()
+    # close webdriver
+    webdriver.quit()

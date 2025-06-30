@@ -8,6 +8,9 @@ from zeit_on_tolino.env_vars import EnvVars, MissingEnvironmentVariable
 
 ZEIT_E_PAPER_URL = "https://epaper.zeit.de/abo/diezeit"
 
+from dotenv import load_dotenv
+load_dotenv()
+
 
 def test__login(webdriver) -> None:
     zeit._login(webdriver)

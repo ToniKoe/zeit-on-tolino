@@ -14,7 +14,7 @@ from zeit_on_tolino.env_vars import EnvVars, MissingEnvironmentVariable
 from zeit_on_tolino.tolino_partner import PartnerDetails
 from zeit_on_tolino.web import Delay
 
-TOLINO_CLOUD_LOGIN_URL = "https://webreader.mytolino.com/"
+TOLINO_CLOUD_LOGIN_URL = "https://webreader.mytolino.com/library/index.html#/mybooks/titles"
 TOLINO_COUNTRY_TO_SELECT = "Deutschland"  # TODO make country a partner shop detail depending on selected partner shop
 
 BUTTON_PLEASE_SELECT_YOUR_COUNTRY = "Bitte wähle Dein Land aus"
@@ -168,3 +168,26 @@ def _upload(webdriver: WebDriver, file_path: Path, e_paper_title: str) -> None:
 def login_and_upload(webdriver: WebDriver, file_path: Path, e_paper_title: str) -> None:
     _login(webdriver)
     _upload(webdriver, file_path, e_paper_title)
+
+
+
+# prompt
+"""You are an expert in automating web processes. 
+I want to learn from you and benefit from your expertise.
+
+Generally, you think before you do something, analyze the problem and love answers on point that are creative and clear. 
+You aks if you do not understand something. You never return an answer that is not doublechecked because you want to keep your reputation as efficient, intelligent expert.
+
+Your task: 
+We want to automate the upload of an epub file to a cloud of a specific provider. 
+you are given the credentials for logging in, the weblink where the cloud can be reached and a reference to the epub on the local drive. 
+we want to use python. 
+
+First let us build the log in procedure:
+The outline of the necessary steps. Stick to it! add necessary steps inbetween like creating a webbrowser instance. 
+1. Step: open url. You are asked to chose your country "Bitte wähle dein Land...". You are give the users country as part of the credentials. Click on the respective Country. 
+2. Step: You are asked to chose the trader "Bitte wähle deinen Buchhändler". That information is also part of the given credentials. Click on the respective trader. 
+3. Step: Find the button with text "Anmelden" and click on it. 
+4. Step: enter "E-Mail-Adresse" and "Passwort" into the respective text fields. (given in credentials). Click on "Anmelden".
+5. Step: wait until page has loaded. We need to come up with a solution to check if the log in was successfull. """
+

@@ -63,6 +63,9 @@ def _get_latest_downloaded_file_path(download_dir: str) -> Path:
 
 def wait_for_downloads(path):
     time.sleep(Delay.small)
+    if not os.path.isdir(path):
+        raise FileNotFoundError(f"Download directory does not exist: {path}")
+
     start = time.time()
     while any([filename.endswith(".crdownload") for filename in os.listdir(path)]):
         now = time.time()

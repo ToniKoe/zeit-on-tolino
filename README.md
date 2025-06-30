@@ -1,3 +1,8 @@
+Probleme: 
+- Captchas bei Tolino Cloud. Login klappt (zeit_on_tolino/tolino_2.py).
+- Zeit: Webseite wurde komplett umgebaut. Alle Flags müssten augetauscht werden. 
+
+
 # zeit-on-tolino
 Service to auto-upload the ZEIT 🗞 e-paper to your Tolino cloud library 📚
 
